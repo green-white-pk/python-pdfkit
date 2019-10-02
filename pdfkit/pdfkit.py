@@ -154,6 +154,11 @@ class PDFKit(object):
     def to_pdf(self, path=None):
         args = self.command(path)
 
+        if not os.path.exists('/usr/bin/xvfb-run'):
+            raise Exception("Please install: sudo apt install xvfb")
+
+        args.insert(0, '/usr/bin/xvfb-run')
+
         result = subprocess.Popen(
             args,
             stdin=subprocess.PIPE,
